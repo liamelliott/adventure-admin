@@ -18,7 +18,7 @@ class LoadingTextField extends React.Component {
         return (
             <Paper>
                 <InputBase type="text" placeholder={this.props.placeholder} onChange={this.handleChange} />
-                {this.state.isLoading && <CircularProgress variant="determinate" />}
+                {this.state.isLoading && <CircularProgress variant="indeterminate" />}
             </Paper>
         );
     }
