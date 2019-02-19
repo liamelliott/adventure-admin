@@ -9,8 +9,14 @@ class LoadingTextField extends React.Component {
     }
 
     handleChange = (event) => {
-        if (event.target.value.length >= this.props.minLength) {
+        const { value } = event.target;
 
+        if (value.length >= this.props.minLength) {
+            this.props.onLoad().then(() => {
+
+            }, () => {
+
+            });
         }
     }
 
@@ -26,6 +32,7 @@ class LoadingTextField extends React.Component {
 
 LoadingTextField.propTypes = {
     placeholder: PropTypes.string,
+    onLoad: PropTypes.func,
     minLength: PropTypes.number
 };
 
