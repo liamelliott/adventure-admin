@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import SearchBox from './SearchBox';
 
 class SearchableInput extends React.Component {
-    handleSearch = (input) => {
+    handleSearch = (input) => new Promise((resolve, reject) => {
 
-    };
+    });
 
     render() {
         return (
             <React.Fragment>
-                <SearchBox onSearch={this.handleSearch}/>
+                <SearchBox onSearch={this.handleSearch} />
             </React.Fragment>
         );
     }
