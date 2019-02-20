@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import SearchBox from './SearchBox';
 
-class SearchableInput extends React.Component {
+class ContactSearch extends React.Component {
     handleSearch = (input) => new Promise((resolve, reject) => {
 
     });
@@ -17,12 +17,12 @@ class SearchableInput extends React.Component {
     }
 }
 
-SearchableInput.propTypes = {
+ContactSearch.propTypes = {
 
 };
 
-SearchableInput.defaultProps = {
+ContactSearch.defaultProps = {
 
 };
 
-export default SearchableInput;
+export default ContactSearch;
