@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
 
 const styles = {
     root: {
@@ -29,19 +26,26 @@ class SearchBox extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = { input: ''};
+
+        this.classes = props.classes;
     }
 
-    handleClick = (event) => {
+    handleChange = (event) => {
         const { value } = event.target;
+        this.setState(Object.assign(this.state, { input: value }));
+    };
 
-        console.log(value);
+    handleClick = () => {
+        this.props.onSearch(this.state.input).then(); 
     };
 
     render() {
         return (
-            <Paper className={this.props.classes.root} elevation={4}>
-                <InputBase className={this.props.classes.input} placeholder={this.props.placeholder} />
-                <IconButton className={this.props.classes.iconButton} aria-label="Search" onClick={this.handleClick}>
+            <Paper className={this.classes.root} elevation={4}>
+                <InputBase className={this.classes.input} placeholder={this.props.placeholder} onChange={this.handleChange} />
+                <IconButton className={this.classes.iconButton} aria-label="Search" onClick={this.handleClick}>
                     <SearchIcon />
                 </IconButton>
             </Paper>
@@ -51,7 +55,8 @@ class SearchBox extends React.Component {
 
 SearchBox.propTypes = {
     placeholder: PropTypes.string,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    onSearch: PropTypes.func.isRequired
 };
 
 SearchBox.defaultProps = {
