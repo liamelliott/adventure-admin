@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AsyncSelect from 'react-select/lib/Async';
+import SearchBox from './SearchBox';
 
 class SearchableInput extends React.Component {
     render() {
         return (
             <React.Fragment>
+                <SearchBox />
             </React.Fragment>
         );
     }
