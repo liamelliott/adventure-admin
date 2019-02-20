@@ -8,17 +8,21 @@ class LoadingTextField extends React.Component {
         this.state = { isLoading: false };
     }
 
+    toggleLoading = () => {
+        this.setState({ isLoading: !this.state.isLoading })
+    };
+
     handleChange = (event) => {
         const { value } = event.target;
 
         if (value.length >= this.props.minLength) {
-            this.props.onLoad().then(() => {
+            this.props.onLoad().then((success) => {
 
-            }, () => {
+            }, (failure) => {
 
             });
         }
-    }
+    };
 
     render() {
         return (
