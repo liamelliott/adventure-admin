@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 
 import SearchableInput from './input/SearchableInput';
 
@@ -7,7 +8,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>Adventure Admin</h1>
+                <Typography variant="title" gutterBottom>Adventure Admin</Typography>
                 <SearchableInput />
             </div>
         )
