@@ -11,7 +11,8 @@ const styles = {
         padding: '2px 4px',
         display: 'flex',
         alignItems: 'center',
-        width: 300
+        width: '100%',
+        maxWidth: 460
     },
     input: {
         marginLeft: 8,
