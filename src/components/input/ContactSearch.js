@@ -2,8 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import { withStyles } from '@material-ui/core';
+
 import SearchBox from './SearchBox';
 import ContactsDisplay from '../display/ContactsDisplay';
+
+const styles = theme => ({
+    root: {
+        margin: theme.spacing.unit
+    },
+    searchBox: {
+        margin: theme.spacing.unit
+    },
+    contactsDisplay: {
+        margin: theme.spacing.unit
+    }
+});
 
 class ContactSearch extends React.Component {
 
@@ -15,13 +29,18 @@ class ContactSearch extends React.Component {
         }
     }
 
+    handleAction = (contact) => new Promise((resolve, reject) => {
+        this.setState(Object.assign(this.state, { contacts: this.state.contacts.filter((value) => value.id != contact.id) }));
+        console.log(this.state.contacts);
+    });
+
     handleSearch = (input) => new Promise((resolve, reject) => {
         this.setState(Object.assign(this.state, {
             contacts: [
-                { name: 'Liam Elliott', avatar: 'http://i.pravatar.cc/200', email: 'lelliott@alpineclubofcanada.ca' },
-                { name: 'Jeff Lockyer', avatar: 'https://alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/Jeff%20in%20fur_thumb.jpg', email: 'jlockyer@alpineclubofcanada.ca' },
-                { name: 'Chris Petrauskas', avatar: 'https://alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/ChrisPetrauskas_thumb.jpg', email: 'cpetrauskas@alpineclubofcanada.ca' },
-                { name: 'Lawrence White', avatar: 'https://alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
+                { id: 28681, name: 'Liam Elliott', avatar: 'https://avatars1.githubusercontent.com/u/6991749?s=460&v=4', email: 'lelliott@alpineclubofcanada.ca' },
+                { id: 55069, name: 'Jeff Lockyer', avatar: 'https://alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/Jeff%20in%20fur_thumb.jpg', email: 'jlockyer@alpineclubofcanada.ca' },
+                { id: 37865, name: 'Chris Petrauskas', avatar: 'https://alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/ChrisPetrauskas_thumb.jpg', email: 'cpetrauskas@alpineclubofcanada.ca' },
+                { id: 48246, name: 'Lawrence White', avatar: 'https://alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
             ]
         }));
     });
@@ -29,8 +48,8 @@ class ContactSearch extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <SearchBox onSearch={this.handleSearch} />
-                <ContactsDisplay contacts={this.state.contacts} />
+                <SearchBox className={this.props.classes.searchBox} onSearch={this.handleSearch} />
+                <ContactsDisplay className={this.props.classes.contactsDisplay} contacts={this.state.contacts} onAction={this.handleAction} actionName="Add" />
             </React.Fragment>
         );
     }
@@ -44,4 +63,4 @@ ContactSearch.defaultProps = {
 
 };
 
-export default ContactSearch;
+export default withStyles(styles)(ContactSearch);
