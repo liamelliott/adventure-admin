@@ -43,7 +43,7 @@ class SearchBox extends React.Component {
 
     render() {
         return (
-            <Paper className={this.classes.root} elevation={4}>
+            <Paper className={this.classes.root}>
                 <InputBase className={this.classes.input} placeholder={this.props.placeholder} onChange={this.handleChange} />
                 <IconButton className={this.classes.iconButton} aria-label="Search" onClick={this.handleClick}>
                     <SearchIcon />
