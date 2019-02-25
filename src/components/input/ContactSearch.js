@@ -5,7 +5,7 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core';
 
 import SearchBox from './SearchBox';
-import ContactsDisplay from '../display/ContactsDisplay';
+import ContactSelect from '../display/ContactSelect'
 
 const styles = theme => ({
     root: {
@@ -49,7 +49,7 @@ class ContactSearch extends React.Component {
         return (
             <React.Fragment>
                 <SearchBox className={this.props.classes.searchBox} onSearch={this.handleSearch} />
-                <ContactsDisplay className={this.props.classes.contactsDisplay} contacts={this.state.contacts} onAction={this.handleAction} actionName="Add" />
+                <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} onAction={this.handleAction} actionName="Add" />
             </React.Fragment>
         );
     }

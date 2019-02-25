@@ -19,7 +19,7 @@ const styles = theme => ({
     }
 });
 
-const ContactsDisplay = (props) => {
+const ContactSelect = (props) => {
     const { contacts, classes } = props;
 
     const handleClick = (contact) => {
@@ -49,10 +49,10 @@ const ContactsDisplay = (props) => {
     );
 }
 
-ContactsDisplay.propTypes = {
+ContactSelect.propTypes = {
     actionName: PropTypes.string.isRequired,
     onAction: PropTypes.func.isRequired,
     contacts: PropTypes.array.isRequired
 };
 
-export default withStyles(styles)(ContactsDisplay);
+export default withStyles(styles)(ContactSelect);
