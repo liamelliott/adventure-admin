@@ -49,7 +49,7 @@ class ContactSearch extends React.Component {
         return (
             <React.Fragment>
                 <SearchBox className={this.props.classes.searchBox} onSearch={this.handleSearch} />
-                <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} onAction={this.handleAction} actionName="Add" />
+                <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} action={{ color: 'primary', name: 'Add', callback: this.handleAction }} />
             </React.Fragment>
         );
     }
