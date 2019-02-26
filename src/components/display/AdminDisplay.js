@@ -14,7 +14,7 @@ const AdminDisplay = (props) => {
 
     return (
         <Paper>
-            {administrators.length > 0 ? <ContactSelect contacts={this.props.administrators} /> : <Typography>There are no administrators assigned to this adventure.</Typography>}
+            {props.administrators.length > 0 ? <ContactSelect contacts={props.administrators} /> : <Typography>There are no administrators assigned to this adventure.</Typography>}
         </Paper>
     );
 }
