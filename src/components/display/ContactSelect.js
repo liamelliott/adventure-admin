@@ -5,12 +5,6 @@ import { Paper, List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSe
 import { Add } from '@material-ui/icons';
 
 const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 460,
-        maxHeight: 200,
-        overflowY: 'scroll'
-    },
     list: {
         padding: theme.spacing.unit
     },
@@ -29,7 +23,6 @@ const ContactSelect = (props) => {
     return (
         <React.Fragment>
             {contacts.length > 0 &&
-                <Paper className={classes.root}>
                     <List>
                         {contacts.map((contact, index) => (
                             <ListItem className={classes.listItem} key={index}>
@@ -44,7 +37,6 @@ const ContactSelect = (props) => {
                             </ListItem>
                         ))}
                     </List>
-                </Paper>
             }
         </React.Fragment>
     );
