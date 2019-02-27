@@ -13,9 +13,9 @@ const AdminDisplay = (props) => {
     const { classes } = props;
 
     return (
-        <Paper>
+        <React.Fragment>
             {props.administrators.length > 0 ? <ContactSelect contacts={props.administrators} /> : <Typography>There are no administrators assigned to this adventure.</Typography>}
-        </Paper>
+        </React.Fragment>
     );
 }
 
