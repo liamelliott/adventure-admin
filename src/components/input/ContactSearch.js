@@ -6,7 +6,6 @@ import { Typography, withStyles } from '@material-ui/core';
 
 import SearchBox from './SearchBox';
 import ContactSelect from '../display/ContactSelect';
-import AdminDisplay from '../display/AdminDisplay';
 
 const styles = theme => ({
     searchBox: {
