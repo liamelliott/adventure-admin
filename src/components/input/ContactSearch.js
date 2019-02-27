@@ -33,7 +33,7 @@ class ContactSearch extends React.Component {
     });
 
     handleRemove = (contact) => new Promise((resolve, reject) => {
-
+        this.setState(Object.assign(this.state, { administrators: this.state.administrators.filter((value) => value.id != contact.id) }));
     });
 
     handleSearch = (input) => new Promise((resolve, reject) => {
@@ -54,9 +54,9 @@ class ContactSearch extends React.Component {
             <React.Fragment>
                 <Typography component="h2" variant="h5" gutterBottom>Search for a contact</Typography>
                 <SearchBox className={this.props.classes.searchBox} onSearch={this.handleSearch} />
-                <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} action={{ color: 'primary', name: 'Add', callback: this.handleAdd }} />
+                <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} action={{ color: 'primary', name: 'Add', callback: this.handleAdd }} emptyMessage="No contacts match your query." />
                 <Typography component="h2" variant="h5">Administrators {this.state.administrators.length > 0 && `(${this.state.administrators.length})`}</Typography>
-                <ContactSelect className={this.props.classes.adminDisplay} contacts={this.state.administrators} action={{color: 'secondary', name: 'Remove', callback: this.handleRemove}} emptyMessage="No administrators are signed up for this adventure." />
+                <ContactSelect className={this.props.classes.adminDisplay} contacts={this.state.administrators} action={{ color: 'secondary', name: 'Remove', callback: this.handleRemove }} emptyMessage="No administrators are signed up for this adventure." />
             </React.Fragment>
         );
     }
