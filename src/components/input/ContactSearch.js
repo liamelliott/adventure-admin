@@ -42,6 +42,8 @@ class ContactSearch extends React.Component {
                 { id: 48246, name: 'Lawrence White', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
             ]
         }));
+        clearTimeout();
+        setTimeout(resolve, 1000);
     });
 
     render() {
@@ -50,8 +52,8 @@ class ContactSearch extends React.Component {
                 <Typography component="h2" variant="h5" gutterBottom>Search for a contact</Typography>
                 <SearchBox className={this.props.classes.searchBox} onSearch={this.handleSearch} />
                 <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} action={{ color: 'primary', name: 'Add', callback: this.handleAction }} />
-                <Typography component="h2" variant="h5">Administrators</Typography>
-                <AdminDisplay className={this.props.classes.adminDisplay} administrators={this.state.administrators} />
+                <Typography component="h2" variant="h5">Administrators {this.state.administrators.length > 0 && `(${this.state.administrators.length})`}</Typography>
+                <AdminDisplay className={this.props.classes.adminDisplay} administrators={this.state.administrators} emptyMessage="No administrators are signed up for this adventure."/>
             </React.Fragment>
         );
     }

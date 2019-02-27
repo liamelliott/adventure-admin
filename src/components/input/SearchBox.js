@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
     root: {
@@ -16,8 +15,8 @@ const styles = {
         marginLeft: 10,
         flex: 1
     },
-    iconButton: {
-        margin: 4
+    loader: {
+        margin: 5
     }
 };
 
@@ -26,27 +25,24 @@ class SearchBox extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { input: ''};
+        this.state = { input: '', isLoading: false };
 
         this.classes = props.classes;
     }
 
     handleChange = (event) => {
         const { value } = event.target;
-        this.setState(Object.assign(this.state, { input: value }));
-    };
-
-    handleClick = () => {
-        this.props.onSearch(this.state.input).then(); 
+        this.setState(Object.assign(this.state, { input: value, isLoading: true }));
+        this.props.onSearch(value).then(() => {
+            this.setState(Object.assign(this.state, { isLoading: false }));
+        });
     };
 
     render() {
         return (
             <Paper className={this.classes.root}>
                 <InputBase className={this.classes.input} placeholder={this.props.placeholder} onChange={this.handleChange} />
-                <IconButton className={this.classes.iconButton} aria-label="Search" onClick={this.handleClick}>
-                    <SearchIcon />
-                </IconButton>
+                {this.state.isLoading && <CircularProgress className={this.classes.loader} size={30} thickness={6} variant="indeterminate" />}
             </Paper>
         );
     }
