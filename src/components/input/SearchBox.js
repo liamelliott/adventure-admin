@@ -9,7 +9,8 @@ const styles = {
     root: {
         display: 'flex',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        height: 40
     },
     input: {
         marginLeft: 10,
@@ -31,11 +32,16 @@ class SearchBox extends React.Component {
     }
 
     handleChange = (event) => {
+        clearTimeout(this.timer);
+        
         const { value } = event.target;
-        this.setState(Object.assign(this.state, { input: value, isLoading: true }));
-        this.props.onSearch(value).then(() => {
-            this.setState(Object.assign(this.state, { isLoading: false }));
-        });
+
+        this.timer = setTimeout(() => {
+            this.setState(Object.assign(this.state, { input: value, isLoading: true }));
+            this.props.onSearch(value).then(() => {
+                this.setState(Object.assign(this.state, { isLoading: false }));
+            });
+        }, 350);
     };
 
     render() {
