@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Paper, List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, Button, withStyles } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Typography, List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, Button, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
     list: {
@@ -10,6 +9,9 @@ const styles = theme => ({
     },
     button: {
         marginRight: theme.spacing.unit
+    },
+    emptyMessage: {
+        textAlign: 'center'
     }
 });
 
@@ -22,7 +24,7 @@ const ContactSelect = (props) => {
 
     return (
         <React.Fragment>
-            {contacts.length > 0 &&
+            {contacts.length > 0  ? 
                     <List>
                         {contacts.map((contact, index) => (
                             <ListItem className={classes.listItem} key={index}>
@@ -36,7 +38,7 @@ const ContactSelect = (props) => {
                                     </ListItemSecondaryAction>}
                             </ListItem>
                         ))}
-                    </List>
+                    </List> : <Typography className={classes.emptyMessage} component="span" variant="subtitle2">{props.emptyMessage}</Typography>
             }
         </React.Fragment>
     );
@@ -48,7 +50,12 @@ ContactSelect.propTypes = {
         color: PropTypes.string.isRequired,
         callback: PropTypes.func.isRequired
     }),
+    emptyMessage: PropTypes.string,
     contacts: PropTypes.array.isRequired
+};
+
+ContactSelect.defaultProps = {
+    emptyMessage: 'There are no items to display.'
 };
 
 export default withStyles(styles)(ContactSelect);
