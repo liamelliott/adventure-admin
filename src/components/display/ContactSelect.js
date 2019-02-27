@@ -11,6 +11,7 @@ const styles = theme => ({
         marginRight: theme.spacing.unit
     },
     emptyMessage: {
+        margin: theme.spacing.unit,
         textAlign: 'center'
     }
 });
