@@ -9,6 +9,7 @@ import ContactSelect from '../display/ContactSelect';
 
 import shuffle from 'lodash/shuffle';
 import differenceBy from 'lodash/differenceBy';
+import intersectionBy from 'lodash/intersectionBy';
 
 const styles = theme => ({
     searchBox: {
@@ -26,6 +27,7 @@ class ContactSearch extends React.Component {
 
         this.state = {
             contacts: [],
+            commonContacts: [],
             administrators: []
         };
 
@@ -33,12 +35,13 @@ class ContactSearch extends React.Component {
     }
 
     handleAdd = (contact) => new Promise((resolve, reject) => {
-        this.setState(Object.assign(this.state, { contacts: this.state.contacts.filter((value) => value.id != contact.id), administrators: [...this.state.administrators, contact] }));
+        this.setState(Object.assign(this.state, { contacts: this.state.contacts.filter((value) => value.id != contact.id), commonContacts: [...this.state.commonContacts, contact], administrators: [...this.state.administrators, contact] }));
         console.log(this.state.contacts);
     });
 
     handleRemove = (contact) => new Promise((resolve, reject) => {
-        this.setState(Object.assign(this.state, { administrators: this.state.administrators.filter((value) => value.id != contact.id) }));
+        const removedContacts = intersectionBy(this.state.commonContacts, [contact]);
+        this.setState(Object.assign(this.state, { contacts: [...this.state.contacts, ...removedContacts], administrators: this.state.administrators.filter((value) => value.id != contact.id) }));
     });
 
     handleSearch = (query) => new Promise((resolve, reject) => {
@@ -49,11 +52,13 @@ class ContactSearch extends React.Component {
             { id: 48246, name: 'Lawrence White', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
         ];
 
-        const contactList = differenceBy(searchResult, this.state.administrators, (value) => value.id);
+        const commonContacts = intersectionBy(searchResult, this.state.administrators, value => value.id);
+        const differingContacts = differenceBy(searchResult, commonContacts, value => value.id);
 
         setTimeout(() => {
             this.setState(Object.assign(this.state, {
-                contacts: shuffle(contactList)
+                contacts: shuffle(differingContacts),
+                commonContacts
             }));
             resolve();
         }, 1000);
