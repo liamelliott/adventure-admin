@@ -36,7 +36,7 @@ class ContactSearch extends React.Component {
         this.setState(Object.assign(this.state, { administrators: this.state.administrators.filter((value) => value.id != contact.id) }));
     });
 
-    handleSearch = (input) => new Promise((resolve, reject) => {
+    handleSearch = (query) => new Promise((resolve, reject) => {
         this.setState(Object.assign(this.state, {
             contacts: [
                 { id: 28681, name: 'Liam Elliott', avatar: 'https://avatars1.githubusercontent.com/u/6991749?s=460&v=4', email: 'lelliott@alpineclubofcanada.ca' },
