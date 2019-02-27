@@ -47,11 +47,10 @@ class ContactSearch extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Typography>Step 1: Search for a contact</Typography>
+                <Typography component="h2" variant="h5" gutterBottom>Search for a contact</Typography>
                 <SearchBox className={this.props.classes.searchBox} onSearch={this.handleSearch} />
-                <Typography>Step 2: Add a contact</Typography>
                 <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} action={{ color: 'primary', name: 'Add', callback: this.handleAction }} />
-                <Typography>Step 3: Define roles</Typography>
+                <Typography component="h2" variant="h5">Administrators</Typography>
                 <AdminDisplay className={this.props.classes.adminDisplay} administrators={this.state.administrators} />
             </React.Fragment>
         );
