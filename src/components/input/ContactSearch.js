@@ -27,7 +27,6 @@ class ContactSearch extends React.Component {
 
         this.state = {
             contacts: [],
-            commonContacts: [],
             administrators: []
         };
     }
@@ -50,8 +49,13 @@ class ContactSearch extends React.Component {
             { id: 48246, name: 'Lawrence White', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
         ];
 
-        const commonContacts = intersectionBy(searchResult, this.state.administrators, value => value.id);
-        const differingContacts = differenceBy(searchResult, commonContacts, value => value.id);
+        const intersection = intersectionBy(searchResult, this.state.administrators, value => value.id);
+        intersection.forEach((admin) => {
+            const element = searchResult.find(result => result.id === admin.id);
+            if(element) {
+                searchResult[element].hide = true;
+            }
+        });
 
         setTimeout(() => {
             this.setState(Object.assign(this.state, {
