@@ -33,16 +33,20 @@ class ContactSearch extends React.Component {
     }
 
     handleAdd = (contact) => new Promise((resolve, reject) => {
+        // TODO replace with api call and update ui in promise
         this.setState(Object.assign(this.state, { contacts: this.state.contacts.filter((value) => value.id != contact.id), commonContacts: [...this.state.commonContacts, contact], administrators: [...this.state.administrators, contact] }));
-        console.log(this.state.contacts);
     });
 
     handleRemove = (contact) => new Promise((resolve, reject) => {
         const removedContacts = intersectionBy(this.state.commonContacts, [contact], value => value.id);
+
+        // TODO replace with api call and update ui in promise
         this.setState(Object.assign(this.state, { contacts: [...this.state.contacts, ...removedContacts], administrators: this.state.administrators.filter((value) => value.id != contact.id) }));
     });
 
     handleSearch = (query) => new Promise((resolve, reject) => {
+
+        // TODO replace with api call
         const searchResult = [
             { id: 28681, name: 'Liam Elliott', avatar: 'https://avatars1.githubusercontent.com/u/6991749?s=460&v=4', email: 'lelliott@alpineclubofcanada.ca' },
             { id: 55069, name: 'Jeff Lockyer', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/Jeff%20in%20fur_thumb.jpg', email: 'jlockyer@alpineclubofcanada.ca' },
@@ -53,6 +57,8 @@ class ContactSearch extends React.Component {
         const commonContacts = intersectionBy(searchResult, this.state.administrators, value => value.id);
         const differingContacts = differenceBy(searchResult, commonContacts, value => value.id);
 
+
+        // TODO remove and update state after api call has been made
         setTimeout(() => {
             this.setState(Object.assign(this.state, {
                 contacts: shuffle(differingContacts),
