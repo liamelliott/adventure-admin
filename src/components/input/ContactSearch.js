@@ -30,8 +30,6 @@ class ContactSearch extends React.Component {
             commonContacts: [],
             administrators: []
         };
-
-        this.classes = props.classes;
     }
 
     handleAdd = (contact) => new Promise((resolve, reject) => {
@@ -40,7 +38,7 @@ class ContactSearch extends React.Component {
     });
 
     handleRemove = (contact) => new Promise((resolve, reject) => {
-        const removedContacts = intersectionBy(this.state.commonContacts, [contact]);
+        const removedContacts = intersectionBy(this.state.commonContacts, [contact], value => value.id);
         this.setState(Object.assign(this.state, { contacts: [...this.state.contacts, ...removedContacts], administrators: this.state.administrators.filter((value) => value.id != contact.id) }));
     });
 
