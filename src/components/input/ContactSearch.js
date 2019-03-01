@@ -53,7 +53,7 @@ class ContactSearch extends React.Component {
         intersection.forEach((admin) => {
             const element = searchResult.find(result => result.id === admin.id);
             if(element) {
-                searchResult[element].hide = true;
+                searchResult[element].hidden = true;
             }
         });
 
