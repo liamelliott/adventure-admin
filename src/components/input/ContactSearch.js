@@ -59,8 +59,7 @@ class ContactSearch extends React.Component {
 
         setTimeout(() => {
             this.setState(Object.assign(this.state, {
-                contacts: shuffle(differingContacts),
-                commonContacts
+                contacts: shuffle(searchResult)
             }));
             resolve();
         }, 1000);

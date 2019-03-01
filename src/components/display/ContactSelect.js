@@ -27,7 +27,7 @@ const ContactSelect = (props) => {
         <React.Fragment>
             {contacts.length > 0  ? 
                     <List>
-                        {contacts.map((contact, index) => (
+                        {contacts.filter((value) => !value.hidden).map((contact, index) => (
                             <ListItem className={classes.listItem} key={index}>
                                 <ListItemAvatar>
                                     <Avatar alt={contact.name} src={contact.avatar} />
