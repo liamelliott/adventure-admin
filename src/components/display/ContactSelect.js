@@ -18,28 +18,28 @@ const styles = theme => ({
 
 const ContactSelect = (props) => {
     const { contacts, classes } = props;
-  
+
     const handleClick = (contact) => {
         props.action.callback(contact).then();
     };
 
     return (
         <React.Fragment>
-            {contacts.length > 0  ? 
-                    <List>
-                        {contacts.map((contact, index) => (
-                            <ListItem className={classes.listItem} key={index}>
-                                <ListItemAvatar>
-                                    <Avatar alt={contact.name} src={contact.avatar} />
-                                </ListItemAvatar>
-                                <ListItemText primary={contact.name} secondary={contact.email} />
-                                {props.action &&
-                                    <ListItemSecondaryAction>
-                                        <Button className={classes.button} variant="contained" color={props.action.color} onClick={() => handleClick(contact)}>{props.action.name}</Button>
-                                    </ListItemSecondaryAction>}
-                            </ListItem>
-                        ))}
-                    </List> : <Typography className={classes.emptyMessage} component="span" variant="subtitle2">{props.emptyMessage}</Typography>
+            {contacts.length > 0 ?
+                <List>
+                    {contacts.filter((value) => !value.hidden).map((contact, index) => (
+                        <ListItem className={classes.listItem} key={index}>
+                            <ListItemAvatar>
+                                <Avatar alt={contact.name} src={contact.avatar} />
+                            </ListItemAvatar>
+                            <ListItemText primary={contact.name} secondary={contact.email} />
+                            {props.action &&
+                                <ListItemSecondaryAction>
+                                    <Button className={classes.button} variant="contained" color={props.action.color} onClick={() => handleClick(contact)}>{props.action.name}</Button>
+                                </ListItemSecondaryAction>}
+                        </ListItem>
+                    ))}
+                </List> : <Typography className={classes.emptyMessage} component="span" variant="subtitle2">{props.emptyMessage}</Typography>
             }
         </React.Fragment>
     );

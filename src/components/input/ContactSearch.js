@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import axios from 'axios';
 
 import { Typography, withStyles } from '@material-ui/core';
@@ -8,8 +8,9 @@ import SearchBox from './SearchBox';
 import ContactSelect from '../display/ContactSelect';
 
 import shuffle from 'lodash/shuffle';
-import differenceBy from 'lodash/differenceBy';
+import find from 'lodash/find';
 import intersectionBy from 'lodash/intersectionBy';
+import omit from 'lodash/omit';
 
 const styles = theme => ({
     searchBox: {
@@ -27,21 +28,22 @@ class ContactSearch extends React.Component {
 
         this.state = {
             contacts: [],
-            commonContacts: [],
             administrators: []
         };
     }
 
-    handleAdd = (contact) => new Promise((resolve, reject) => {
+    handleAdd = (contact) => new Promise(() => {
         // TODO replace with api call and update ui in promise
-        this.setState(Object.assign(this.state, { contacts: this.state.contacts.filter((value) => value.id != contact.id), commonContacts: [...this.state.commonContacts, contact], administrators: [...this.state.administrators, contact] }));
+        const hidden = { ...contact, hidden: true };
+
+        this.setState(Object.assign(this.state, { contacts: this.state.contacts.map(value => value.id === contact.id ? hidden : value), administrators: [...this.state.administrators, contact] }));
     });
 
     handleRemove = (contact) => new Promise((resolve, reject) => {
-        const removedContacts = intersectionBy(this.state.commonContacts, [contact], value => value.id);
-
         // TODO replace with api call and update ui in promise
-        this.setState(Object.assign(this.state, { contacts: [...this.state.contacts, ...removedContacts], administrators: this.state.administrators.filter((value) => value.id != contact.id) }));
+        const administrators = this.state.administrators.filter(value => value.id != contact.id);
+
+        this.setState(Object.assign(this.state, { contacts: [...this.state.contacts.map(value => value.id === contact.id ? omit(value, 'hidden') : value)], administrators }));
     });
 
     handleSearch = (query) => new Promise((resolve, reject) => {
@@ -54,15 +56,19 @@ class ContactSearch extends React.Component {
             { id: 48246, name: 'Lawrence White', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
         ];
 
-        const commonContacts = intersectionBy(searchResult, this.state.administrators, value => value.id);
-        const differingContacts = differenceBy(searchResult, commonContacts, value => value.id);
+        const intersection = intersectionBy(searchResult, this.state.administrators, value => value.id);
+        intersection.forEach((admin) => {
+            const element = searchResult.find(result => result.id === admin.id);
+            if (element) {
+                searchResult[element].hidden = true;
+            }
+        });
 
 
         // TODO remove and update state after api call has been made
         setTimeout(() => {
             this.setState(Object.assign(this.state, {
-                contacts: shuffle(differingContacts),
-                commonContacts
+                contacts: shuffle(searchResult)
             }));
             resolve();
         }, 1000);
