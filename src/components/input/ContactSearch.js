@@ -8,7 +8,6 @@ import SearchBox from './SearchBox';
 import ContactSelect from '../display/ContactSelect';
 
 import shuffle from 'lodash/shuffle';
-import find from 'lodash/find';
 import intersectionBy from 'lodash/intersectionBy';
 import omit from 'lodash/omit';
 
@@ -56,19 +55,10 @@ class ContactSearch extends React.Component {
             { id: 48246, name: 'Lawrence White', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
         ];
 
-        const intersection = intersectionBy(searchResult, this.state.administrators, value => value.id);
-        intersection.forEach((admin) => {
-            const element = searchResult.find(result => result.id === admin.id);
-            if (element) {
-                searchResult[element].hidden = true;
-            }
-        });
-
-
         // TODO remove and update state after api call has been made
         setTimeout(() => {
             this.setState(Object.assign(this.state, {
-                contacts: shuffle(searchResult)
+                contacts: searchResult.map(value => this.state.administrators.some(admin => admin.id === value.id) ? { ...value, hidden: true } : value)
             }));
             resolve();
         }, 1000);
