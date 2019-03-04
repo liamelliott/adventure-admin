@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Typography, List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, Button, withStyles } from '@material-ui/core';
+import countBy from 'lodash/countBy';
 
 const styles = theme => ({
     list: {
@@ -16,6 +17,7 @@ const styles = theme => ({
     }
 });
 
+
 const ContactSelect = (props) => {
     const { contacts, classes } = props;
 
@@ -23,11 +25,15 @@ const ContactSelect = (props) => {
         props.action.callback(contact).then();
     };
 
+    const filterHidden = (contacts) => contacts.filter(value => !value.hidden);
+
+    const visibleContacts = filterHidden(contacts);
+
     return (
         <React.Fragment>
-            {contacts.length > 0 ?
+            {visibleContacts.length > 0 ?
                 <List>
-                    {contacts.filter((value) => !value.hidden).map((contact, index) => (
+                    {visibleContacts.map((contact, index) => (
                         <ListItem className={classes.listItem} key={index}>
                             <ListItemAvatar>
                                 <Avatar alt={contact.name} src={contact.avatar} />
