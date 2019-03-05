@@ -1,7 +1,8 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 
-import ContactSearch from './input/ContactSearch';
+import ContactSearch from './input/ManageAdministratorsPage';
+import ManageAdministratorsPage from './input/ManageAdministratorsPage';
 
 class App extends React.Component {
 
@@ -9,7 +10,7 @@ class App extends React.Component {
         return (
             <div>
                 <Typography variant="title" gutterBottom>Adventure Admin</Typography>
-                <ContactSearch />
+                <ManageAdministratorsPage />
             </div>
         )
     }

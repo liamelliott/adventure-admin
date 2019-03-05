@@ -20,7 +20,7 @@ const styles = theme => ({
     }
 });
 
-class ContactSearch extends React.Component {
+class ManageAdministratorsPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -74,12 +74,12 @@ class ContactSearch extends React.Component {
     }
 }
 
-ContactSearch.propTypes = {
+ManageAdministratorsPage.propTypes = {
 
 };
 
-ContactSearch.defaultProps = {
+ManageAdministratorsPage.defaultProps = {
 
 };
 
-export default withStyles(styles)(ContactSearch);
+export default withStyles(styles)(ManageAdministratorsPage);
