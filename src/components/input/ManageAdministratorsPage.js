@@ -47,18 +47,13 @@ class ManageAdministratorsPage extends React.Component {
 
     handleSearch = (query) => new Promise((resolve, reject) => {
 
-        axios.get(`https://www.alpineclubofcanada.ca/Asi.Scheduler_WEB/party?email=contains:${query}`).then((response) => {
-            console.log(response.data);
-
+        this.props.onSearch(query).then((searchResult) => {
             this.setState(Object.assign(this.state, {
                 contacts: searchResult.map(value => this.state.administrators.some(admin => admin.id === value.id) ? { ...value, hidden: true } : value)
             }));
+        }).catch();
 
-            resolve();
-        }).catch((error) => {
-
-            reject();
-        });
+        resolve();
     });
 
     render() {
@@ -75,11 +70,9 @@ class ManageAdministratorsPage extends React.Component {
 }
 
 ManageAdministratorsPage.propTypes = {
-
-};
-
-ManageAdministratorsPage.defaultProps = {
-
+    onSearch: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ManageAdministratorsPage);
