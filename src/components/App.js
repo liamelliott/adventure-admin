@@ -4,8 +4,20 @@ import axios from 'axios';
 
 import ContactSearch from './input/ManageAdministratorsPage';
 import ManageAdministratorsPage from './input/ManageAdministratorsPage';
+import { apiToken } from '../../secrets';
 
 class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = { apiToken: '' };
+    }
+
+    componentDidMount = () => {
+        const token = apiToken || document.getElementById('__RequestVerificationToken').value;
+        this.setState(Object.assign(this.state, { apiToken: token }));
+    };
 
     handleSearch = (query) => new Promise((resolve, reject) => {
         resolve([]);
