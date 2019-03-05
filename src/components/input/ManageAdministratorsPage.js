@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes, { object } from 'prop-types';
-import axios from 'axios';
 
 import { Typography, withStyles } from '@material-ui/core';
 
 import SearchBox from './SearchBox';
 import ContactSelect from '../display/ContactSelect';
 
-import shuffle from 'lodash/shuffle';
-import intersectionBy from 'lodash/intersectionBy';
 import omit from 'lodash/omit';
 
 const styles = theme => ({
@@ -32,26 +29,33 @@ class ManageAdministratorsPage extends React.Component {
     }
 
     handleAdd = (contact) => new Promise(() => {
-        // TODO replace with api call and update ui in promise
-        const hidden = { ...contact, hidden: true };
+        this.props.onAdd(contact).then((addedContact) => {
+            const hidden = { ...contact, hidden: true };
 
-        this.setState(Object.assign(this.state, { contacts: this.state.contacts.map(value => value.id === contact.id ? hidden : value), administrators: [...this.state.administrators, contact] }));
+            this.setState(Object.assign(this.state, { contacts: this.state.contacts.map(value => value.id === addedContact.id ? hidden : value), administrators: [...this.state.administrators, addedContact] }));
+        }).catch(() => {
+
+        });
     });
 
     handleRemove = (contact) => new Promise((resolve, reject) => {
-        // TODO replace with api call and update ui in promise
-        const administrators = this.state.administrators.filter(value => value.id != contact.id);
+        this.props.onRemove(contact).then((removedContact) => {
+            const administrators = this.state.administrators.filter(value => value.id != removedContact.id);
 
-        this.setState(Object.assign(this.state, { contacts: [...this.state.contacts.map(value => value.id === contact.id ? omit(value, 'hidden') : value)], administrators }));
+            this.setState(Object.assign(this.state, { contacts: [...this.state.contacts.map(value => value.id === removedContact.id ? omit(value, 'hidden') : value)], administrators }));
+        }).catch(() => {
+
+        });
     });
 
     handleSearch = (query) => new Promise((resolve, reject) => {
-
         this.props.onSearch(query).then((searchResult) => {
             this.setState(Object.assign(this.state, {
                 contacts: searchResult.map(value => this.state.administrators.some(admin => admin.id === value.id) ? { ...value, hidden: true } : value)
             }));
-        }).catch();
+        }).catch(() => {
+
+        });
 
         resolve();
     });
