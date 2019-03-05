@@ -47,21 +47,18 @@ class ContactSearch extends React.Component {
 
     handleSearch = (query) => new Promise((resolve, reject) => {
 
-        // TODO replace with api call
-        const searchResult = [
-            { id: 28681, name: 'Liam Elliott', avatar: 'https://avatars1.githubusercontent.com/u/6991749?s=460&v=4', email: 'lelliott@alpineclubofcanada.ca' },
-            { id: 55069, name: 'Jeff Lockyer', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/Jeff%20in%20fur_thumb.jpg', email: 'jlockyer@alpineclubofcanada.ca' },
-            { id: 37865, name: 'Chris Petrauskas', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/ChrisPetrauskas_thumb.jpg', email: 'cpetrauskas@alpineclubofcanada.ca' },
-            { id: 48246, name: 'Lawrence White', avatar: 'https://www.alpineclubofcanada.ca/WEB/images/ACC/About/National%20Office/LW%20gunslinger%20staff.jpg', email: 'lwhite@alpineclubofcanada.ca' }
-        ];
+        axios.get(`https://www.alpineclubofcanada.ca/Asi.Scheduler_WEB/party?email=contains:${query}`).then((response) => {
+            console.log(response.data);
 
-        // TODO remove and update state after api call has been made
-        setTimeout(() => {
             this.setState(Object.assign(this.state, {
                 contacts: searchResult.map(value => this.state.administrators.some(admin => admin.id === value.id) ? { ...value, hidden: true } : value)
             }));
+
             resolve();
-        }, 1000);
+        }).catch((error) => {
+
+            reject();
+        });
     });
 
     render() {
