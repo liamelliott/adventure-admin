@@ -38,10 +38,8 @@ class SearchBox extends React.Component {
 
         this.timer = setTimeout(() => {
             this.setState(Object.assign(this.state, { input: value, isLoading: true }));
-            this.props.onSearch(value).then(() => {
-                this.setState({ ...this.state, isLoading: false });
-            }).catch(() => {
-                this.setState({ ...this.state, isLoading: false });
+            this.props.onSearch(value).finally(() => {
+                this.setState(Object.assign(this.state, { isLoading: false }));
             });
         }, 350);
     };
