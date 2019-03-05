@@ -2,7 +2,6 @@ import React from 'react';
 import { Typography } from '@material-ui/core';
 import axios from 'axios';
 
-import ContactSearch from './input/ManageAdministratorsPage';
 import ManageAdministratorsPage from './input/ManageAdministratorsPage';
 import { apiToken } from '../../secrets';
 
