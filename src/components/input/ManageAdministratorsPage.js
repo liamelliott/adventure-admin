@@ -28,13 +28,15 @@ class ManageAdministratorsPage extends React.Component {
         };
     }
 
-    handleAdd = (contact) => new Promise(() => {
+    handleAdd = (contact) => new Promise((resolve, reject) => {
         this.props.onAdd(contact).then((addedContact) => {
             const hidden = { ...contact, hidden: true };
 
             this.setState(Object.assign(this.state, { contacts: this.state.contacts.map(value => value.id === addedContact.id ? hidden : value), administrators: [...this.state.administrators, addedContact] }));
-        }).catch(() => {
 
+            resolve();
+        }).catch(() => {
+            reject();
         });
     });
 
@@ -43,8 +45,10 @@ class ManageAdministratorsPage extends React.Component {
             const administrators = this.state.administrators.filter(value => value.id != removedContact.id);
 
             this.setState(Object.assign(this.state, { contacts: [...this.state.contacts.map(value => value.id === removedContact.id ? omit(value, 'hidden') : value)], administrators }));
-        }).catch(() => {
 
+            resolve();
+        }).catch(() => {
+            reject();
         });
     });
 
@@ -53,11 +57,11 @@ class ManageAdministratorsPage extends React.Component {
             this.setState(Object.assign(this.state, {
                 contacts: searchResult.map(value => this.state.administrators.some(admin => admin.id === value.id) ? { ...value, hidden: true } : value)
             }));
+
+            resolve();
         }).catch(() => {
-
+            reject();
         });
-
-        resolve();
     });
 
     render() {
