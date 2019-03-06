@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import ManageAdministratorsPage from './input/ManageAdministratorsPage';
 import { apiToken } from '../../config/secrets';
+import { CsrfToken, BearerToken } from '../connections/Token';
 
 class App extends React.Component {
 
@@ -14,8 +15,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        const token = apiToken || { type: 'csrf', value: document.getElementById('__RequestVerificationToken').value };
-        this.setState(Object.assign(this.state, { apiToken: token }));
+        const token = apiToken ? new BearerToken(apiToken) : new CsrfToken(document.getElementById('__RequestVerificationToken').value);
+        token.connect(axios);
     }
 
     handleSearch = (query) => new Promise((resolve, reject) => {
