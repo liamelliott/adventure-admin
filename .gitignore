@@ -64,4 +64,4 @@ typings/
 dist/
 
 # Secrets
-secrets.js
+config/index.js

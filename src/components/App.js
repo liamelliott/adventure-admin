@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import axios from 'axios';
 
 import ManageAdministratorsPage from './input/ManageAdministratorsPage';
-import { apiToken } from '../../config/secrets';
+import { apiToken } from '../../config';
 import { CsrfToken, BearerToken } from '../connections/Token';
 
 class App extends React.Component {
@@ -11,7 +11,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        axios.defaults.baseURL = ;
     }
 
     componentDidMount() {
@@ -20,15 +20,21 @@ class App extends React.Component {
     }
 
     handleSearch = (query) => new Promise((resolve, reject) => {
-        resolve([]);
+        axios.get().then((response) => {
+            resolve([]);
+        }).catch();
     });
 
     handleAdd = (contact) => new Promise((resolve, reject) => {
-        resolve();
+        axios.post().then((response) => {
+            resolve();
+        }).catch();
     });
 
     handleRemove = (contact) => new Promise((resolve, reject) => {
-        resolve();
+        axios.delete().then((response) => {
+            resolve();
+        }).catch();
     });
 
     render() {
