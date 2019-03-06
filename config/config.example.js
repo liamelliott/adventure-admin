@@ -1,1 +1,1 @@
-export const apiToken = { type: 'bearer', value: 'token' }; // type can be either bearer or csrf
+export const apiToken = 'Bearer Token';
