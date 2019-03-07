@@ -14,7 +14,7 @@ class BearerToken {
     }
 
     connect(axios) {
-        axios.defaults.headers.common('Authorization') = `Bearer ${this.token}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
     }
 }
 
