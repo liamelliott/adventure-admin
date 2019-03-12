@@ -19,7 +19,6 @@ const styles = theme => ({
 
 const filterHidden = (contacts) => contacts.filter(value => !value.hidden);
 
-
 const ContactSelect = (props) => {
     const { contacts, classes } = props;
 
