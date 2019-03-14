@@ -68,7 +68,7 @@ class ManageAdministratorsPage extends React.Component {
         return (
             <React.Fragment>
                 <Typography component="h2" variant="h5" gutterBottom>Search for a contact</Typography>
-                <SearchBox className={this.props.classes.searchBox} placeholder="Contact Name or Email" onSearch={this.handleSearch} />
+                <SearchBox className={this.props.classes.searchBox} placeholder="Contact Name" onSearch={this.handleSearch} />
                 <ContactSelect className={this.props.classes.contactsDisplay} contacts={this.state.contacts} action={{ color: 'primary', name: 'Add', callback: this.handleAdd }} emptyMessage="No contacts match your query." />
                 <Typography component="h2" variant="h5">Administrators {this.state.administrators.length > 0 && `(${this.state.administrators.length})`}</Typography>
                 <ContactSelect className={this.props.classes.adminDisplay} contacts={this.state.administrators} action={{ color: 'secondary', name: 'Remove', callback: this.handleRemove }} emptyMessage="No administrators are signed up for this adventure." />
