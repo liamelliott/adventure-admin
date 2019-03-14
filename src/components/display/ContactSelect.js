@@ -44,7 +44,7 @@ const ContactSelect = (props) => {
                                 </ListItemSecondaryAction>}
                         </ListItem>
                     ))}
-                </List> : <Typography className={classes.emptyMessage} component="span" variant="subtitle2">{props.emptyMessage}</Typography>
+                </List> : <Typography className={`list-empty-message ${classes.emptyMessage}`} component="span" variant="subtitle2">{props.emptyMessage}</Typography>
             }
         </React.Fragment>
     );
