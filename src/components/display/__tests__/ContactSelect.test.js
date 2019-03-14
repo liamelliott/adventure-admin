@@ -1,5 +1,9 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+
+import { shallow, mount, render } from 'enzyme';
+
+import { Typography } from '@material-ui/core';
+
 import ContactSelect from '../ContactSelect';
 
 describe('ContactSelect', () => {
@@ -9,10 +13,7 @@ describe('ContactSelect', () => {
 
         const allContacts = [hiddenContact, ...Array(2).fill({ name: 'First Last', email: 'anonymous@example.com', ...demoContact })]
 
-        const component = renderer.create(<ContactSelect contacts={allContacts} />);
-        const tree = component.toJSON();
-
-        tree.children.forEach(value => console.log(value.children));
+        const wrapper = shallow(<ContactSelect contacts={allContacts} />);
     });
 
     it('should display correct number of visible contacts', () => {
@@ -21,19 +22,16 @@ describe('ContactSelect', () => {
 
         const allContacts = [...Array(5).fill({ ...demoContact }), ...Array(2).fill({ ...demoContact, hidden: true })];
 
-        const component = renderer.create(<ContactSelect contacts={allContacts} emptyMessage={emptyMessage} />);
-        const tree = component.toJSON();
-
-        expect(tree.children.length).toBe(5);
+        const wrapper = shallow(<ContactSelect contacts={allContacts} emptyMessage={emptyMessage} />);
     });
 
     it('should display empty message if no contacts are visible', () => {
         const emptyMessage = 'List is empty.';
         const hiddenContacts = Array(5).fill({ name: 'First Last', email: 'email@example.com', avatar: 'img.jpg', hidden: true });
 
-        const component = renderer.create(<ContactSelect contacts={hiddenContacts} emptyMessage={emptyMessage} />);
-        const tree = component.toJSON();
+        const wrapper = render(<ContactSelect contacts={hiddenContacts} emptyMessage={emptyMessage} />);
 
-        expect(tree.children).toEqual([emptyMessage]);
+        console.log(wrapper);
+
     });
 });
