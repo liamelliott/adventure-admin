@@ -1,27 +1,36 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import { uniqBy } from 'lodash';
 import axios from 'axios';
 
 import ManageAdministratorsPage from './input/ManageAdministratorsPage';
-import { apiToken, baseURL } from '../../config';
-import { CsrfToken, BearerToken } from '../connections/Token';
+
+export function normalizeContacts(...results) {
+    const combined = [];
+    results.forEach((result) => {
+        combined.push(...result["Items"]["$values"])
+    });
+
+    return combined.map(value => {
+        return {
+            id: value["Id"],
+            name: value["Name"],
+            email: value["Email"]
+        }
+    });
+};
 
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        axios.defaults.baseURL = baseURL;
-        const token = apiToken ? new BearerToken(apiToken) : new CsrfToken(document.getElementById('__RequestVerificationToken').value);
-        token.connect(axios);
-    }
 
     handleSearch = (query) => new Promise((resolve, reject) => {
-        console.log(axios.defaults);
-        axios.get(`/party?name=contains:${query}`).then((response) => {
-            resolve([]);
+        const nameQuery = axios.get(`/partysummary?name=contains:${query}`);
+        const emailQuery = axios.get(`/partysummary?email=contains:${query}`);
+
+        Promise.all([nameQuery, emailQuery]).then((results) => {
+            resolve(normalizeContacts(...results));
         }).catch((error) => {
-            reject();
+            reject(error);
         });
     });
 

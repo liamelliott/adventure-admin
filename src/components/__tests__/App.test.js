@@ -1,7 +1,38 @@
 import React from 'react';
 
-import App from '../App';
+import axios from 'axios';
+import App, { normalizeContacts } from '../App';
 
 describe('<App />', () => {
-    it.todo('should call axios.get when searching');
+    describe('.handleSearch', () => {
+        it('should call axios.get twice', () => {
+            axios.get.mockImplementationOnce(() => Promise.resolve({ data: [true] }));
+            const query = "Liam Elliott";
+            const app = new App();
+
+            app.handleSearch(query);
+
+            expect(axios.get).toHaveBeenCalledTimes(2);
+        });
+    });
+
+    describe('normalizeContacts', () => {
+        it('should normalize to correct contact form', () => {
+            const response = {
+                "Items": {
+                    "$values": [
+                        { "Id": 207406, "Name": "Alexander Elliott", "Email": "alexander.s.elliott@gmail.com" },
+                        { "Id": 28681, "Name": "Liam Elliott", "Email": "lelliott@alpineclubofcanada.ca" }
+                    ]
+                }
+            };
+
+            const data = normalizeContacts(response);
+
+            expect(data).toEqual(expect.arrayContaining([
+                { id: 28681, name: 'Liam Elliott', email: 'lelliott@alpineclubofcanada.ca' },
+                { id: 207406, name: 'Alexander Elliott', email: 'alexander.s.elliott@gmail.com' }
+            ]));
+        });
+    });
 });
